@@ -37,8 +37,8 @@ TRUNCATE TABLE alumnos RESTART IDENTITY CASCADE;
 3. Abrir el proyecto en tu IDE de preferencia.
 4. Asegurarse de agregar los `.jar` de la carpeta `lib` al *Class Path* del proyecto.
 5. Configurar las credenciales de conexión en el archivo `Conexion.java` (dentro de `src`).
-6. Ejecutar la clase principal.
+6. Ejecutar la clase principal: **Login.java**
 7. **Crear Usuario / Login:** Al iniciar la app, utiliza la opción "Registrar" para crear un nuevo usuario administrador, luego inicia sesión con esas credenciales para acceder al panel de gestión de información.
 
 ---
-**Autor:** [Adriano Alonso Zulaoga Aybar] - *Proyecto Académico / Portafolio*
+**Autor:** Adriano Alonso Zulaoga Aybar - *Proyecto Académico / Portafolio*
