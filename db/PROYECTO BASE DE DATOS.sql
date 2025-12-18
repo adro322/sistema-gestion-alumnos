@@ -1,6 +1,13 @@
+-- =============================================
+-- SISTEMA DE GESTIÓN DE ALUMNOS - DATABASE SCRIPT
+-- Motor: PostgreSQL
+-- =============================================
+
 create database base_project2;
 
---Tabla Usuarios
+-- 1. CREACIÓN DE TABLAS
+-- ---------------------------------------------
+-- Tabla: Usuarios (Administradores)
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100),
@@ -13,14 +20,14 @@ CREATE TABLE usuarios (
 );
 
 
---Tabla Sedes
+--Tabla: Sedes
 CREATE TABLE sedes (
     id_sede SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     direccion TEXT
 );
 
---Tabla Alumnos
+--Tabla: Alumnos (Informacion Academica)
 CREATE TABLE alumnos (
     id SERIAL PRIMARY KEY,
     codigo VARCHAR(10) UNIQUE NOT NULL,
@@ -37,7 +44,8 @@ CREATE TABLE alumnos (
     id_sede INTEGER REFERENCES sedes(id_sede)
 );
 
---Insertar Datos de la Sede
+-- 2. POBLADO DE DATOS (SEDES)
+-- ---------------------------------------------
 INSERT INTO sedes (nombre, direccion) VALUES
 ('Lima Centro', 'Jr. Hernán Velarde 289, Lima'),
 ('Lima Norte', 'Av. Alfredo Mendiola 6377, Los Olivos'),
@@ -53,7 +61,10 @@ INSERT INTO sedes (nombre, direccion) VALUES
 ('Trujillo', 'Av. Nicolás de Piérola 1221, Trujillo');
 
 
---FUNCION MOSTRAR TABLA
+-- 3. FUNCIONES Y PROCEDIMIENTOS ALMACENADOS
+-- ---------------------------------------------
+
+-- Función: Mostrar todos los alumnos con el nombre de su sede
 CREATE OR REPLACE FUNCTION pa_mostrarAlumnos()
 RETURNS TABLE (
     id INT,
@@ -82,7 +93,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Actualizamos la función para que incluya fecha_ingreso
+-- Función: Buscar alumnos por apellido
 CREATE OR REPLACE FUNCTION pa_buscaralumnosApellidos(vape VARCHAR)
 RETURNS TABLE (
     id INT,
@@ -113,13 +124,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- 1. Primero eliminamos la versión anterior de la función
-DROP FUNCTION IF EXISTS pa_buscaralumnosApellidos(VARCHAR);
-
-SELECT * FROM usuarios
-SELECT * FROM pa_buscaralumnosApellidos('Lopez');
-
-SELECT * FROM SEDES;
-SELECT * FROM ALUMNOS;
-TRUNCATE TABLE alumnos RESTART IDENTITY CASCADE;
+-- 4. COMANDOS DE MANTENIMIENTO (ÚTILES)
+-- ---------------------------------------------
+-- Ejecutar ESTA línea si deseas borrar todos los alumnos y reiniciar los IDs desde 1.
+-- Útil cuando quieres cargar un nuevo archivo Excel limpio.
+-- TRUNCATE TABLE alumnos RESTART IDENTITY CASCADE;
 
